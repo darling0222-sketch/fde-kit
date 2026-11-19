@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fde-kit"
+version = "0.1.0"
+description = "FDE field-delivery kit: ontology-first knowledge compilation, context assembly, evaluable agents."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "fde-kit contributors" }]
+keywords = ["fde", "rag", "context-engineering", "agent", "langgraph", "knowledge-base"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+dependencies = [
+  "fastapi>=0.110",
+  "uvicorn>=0.27",
+  "httpx>=0.27",
+  "numpy>=1.26",
+  "PyYAML>=6.0",
+  "pydantic>=2.5",
+]
+
+[project.optional-dependencies]
+docs = ["pypdf>=4.0", "python-docx>=1.1", "beautifulsoup4>=4.12"]
+langchain = ["langgraph>=0.2", "langchain-text-splitters>=0.3", "langchain-core>=0.3"]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.23", "ruff>=0.5"]
+
+[project.scripts]
+fde = "fde_kit.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/darling0222-sketch/fde-kit"
+Documentation = "https://github.com/darling0222-sketch/fde-kit#readme"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+fde_kit = ["api/static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["B008"]

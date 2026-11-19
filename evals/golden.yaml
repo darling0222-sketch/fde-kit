@@ -1,0 +1,51 @@
+name: 售后一线问答集
+k: 5
+cases:
+  - id: c01
+    question: A100 的整机保修期是多久？
+    must_cite: ["售后退换货政策"]
+    keywords: ["24 个月"]
+    notes: 政策口径题，答案必须带明确时限，不能只说“有保修”
+
+  - id: c02
+    question: E021 故障码是什么意思，现场怎么处理？
+    must_cite: ["产品手册-A100"]
+    keywords: ["风扇"]
+    notes: 故障码题，必须落到可执行动作
+
+  - id: c03
+    question: 2024 年 3 月出货的 B200 保修期到底按多久算？
+    must_cite: ["售后退换货政策"]
+    keywords: ["36 个月"]
+    notes: 考察能否识别“统一延保”这条例外，而不是套用 18 个月
+
+  - id: c04
+    question: 退货的运费由谁承担？
+    must_cite: ["售后退换货政策"]
+    keywords: ["运费"]
+    notes: 时效与费用类问题，最容易答得含糊
+
+  - id: c05
+    question: SN-2024-0311 这台设备是哪个客户的，保修到期是什么时候？
+    must_cite: ["设备台账"]
+    keywords: ["宏远", "2027"]
+    notes: 需要从表格里按序列号取数，考察表格解析质量
+
+  - id: c06
+    question: A100 反复出现过热报警，工单记录里最后是怎么处理的？
+    must_cite: ["工单记录"]
+    keywords: ["风扇"]
+    notes: 需要跨工单看出“先清理、后更换”的处置升级
+
+  - id: c07
+    question: 上门服务的响应时效是多久？
+    must_cite: ["服务网点"]
+    keywords: ["48"]
+    notes: HTML 页面解析是否生效
+
+  - id: c08
+    question: 这批设备出口欧盟的 CE 认证编号是多少？
+    must_cite: []
+    keywords: []
+    expect_no_answer: true
+    notes: 反例题：知识库里没有认证信息，系统必须拒答而不是编一个编号

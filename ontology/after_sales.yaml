@@ -1,0 +1,74 @@
+name: 售后服务领域本体
+version: "0.1.0"
+domain: 工业控制器售后
+description: >
+  先定义现场里到底有哪些“东西”，再谈检索。
+  这里列出的每一类实体，都会在编译期被抽取、在检索期被加权、在交付报告里被统计覆盖率。
+  换客户时，改这个文件比改代码值钱得多。
+
+retrieval:
+  boost: 0.18        # 命中实体的候选块，RRF 分乘以 (1 + boost)
+  section_weights: {}
+
+entity_types:
+  Product:
+    description: 设备型号
+    weight: 0.20
+    patterns:
+      - '\b([ABC]\d{3})\b'
+      - '([ABC]\d{3})\s*(?:系列|控制器|工业控制器)'
+    aliases: ["整机", "控制器", "主机"]
+
+  FaultCode:
+    description: 故障码
+    weight: 0.26
+    patterns:
+      - '\b(E\d{3})\b'
+      - '故障码[:：]?\s*([A-Z]\d{2,4})'
+    aliases: ["故障码", "报警码"]
+
+  PartNo:
+    description: 备件编号
+    weight: 0.18
+    patterns:
+      - '\b(P-\d{4})\b'
+      - '备件号[:：]?\s*(P-\d{4})'
+    aliases: ["备件", "备件号"]
+
+  SerialNo:
+    description: 设备序列号
+    weight: 0.22
+    patterns:
+      - '\b(SN-\d{4}-\d{4})\b'
+    aliases: ["序列号", "SN"]
+
+  PolicyTerm:
+    description: 政策口径（时限、保修期等）
+    weight: 0.14
+    patterns:
+      - '(\d+\s*个?自然日内)'
+      - '(\d+\s*个月内)'
+      - '(整机保修\s*\d+\s*个月)'
+      - '(保修期延长至\s*\d+\s*个月)'
+    aliases: ["保修", "保修期", "质保", "延保", "无理由退货"]
+
+  WorkOrder:
+    description: 工单号
+    weight: 0.16
+    patterns:
+      - '\b(WO-\d{4}-\d{4})\b'
+    aliases: ["工单", "工单号"]
+
+relations:
+  - from: SerialNo
+    to: Product
+    type: instance_of
+  - from: WorkOrder
+    to: SerialNo
+    type: about
+  - from: WorkOrder
+    to: FaultCode
+    type: diagnosed_as
+  - from: FaultCode
+    to: PartNo
+    type: fixed_by_part

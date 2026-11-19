@@ -1,0 +1,17 @@
+services:
+  fde-kit:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./examples/corpus:/app/examples/corpus:ro
+      - ./ontology:/app/ontology:ro
+    environment:
+      FDE_HOME: /app/data
+      # 留空即离线模式；接模型时填任意 OpenAI 兼容网关
+      FDE_LLM_BASE_URL: ${FDE_LLM_BASE_URL:-}
+      FDE_LLM_API_KEY: ${FDE_LLM_API_KEY:-}
+      FDE_LLM_MODEL: ${FDE_LLM_MODEL:-}
+      FDE_TENANT: ${FDE_TENANT:-demo}
+    restart: unless-stopped
